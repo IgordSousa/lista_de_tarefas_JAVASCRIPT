@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        /* Estilos para a lista de tarefas */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .completed {
+            text-decoration: line-through;
+        }
+        .checkbox {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minha Lista de Tarefas</h1>
+    <input type="text" id="taskInput" placeholder="Digite uma tarefa">
+    <button onclick="addTask()">Adicionar Tarefa</button>
+    <ul id="taskList"></ul>
+
+    <script>
+        const taskList = document.getElementById('taskList');
+        const taskInput = document.getElementById('taskInput');
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText) {
+                const li = document.createElement('li');
+                li.textContent = taskText;
+                li.addEventListener('click', toggleTask);
+
+                // Adiciona botão de exclusão
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Excluir';
+                deleteButton.addEventListener('click', deleteTask);
+                li.appendChild(deleteButton);
+
+                // Adiciona caixa de seleção
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'checkbox';
+                li.appendChild(checkbox);
+
+                taskList.appendChild(li);
+                taskInput.value = '';
+            }
+        }
+
+        function toggleTask(event) {
+            const li = event.target;
+            li.classList.toggle('completed');
+        }
+
+        function deleteTask(event) {
+            const li = event.target.parentElement;
+            taskList.removeChild(li);
+        }
+    </script>
+</body>
+</html>
